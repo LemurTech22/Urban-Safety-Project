@@ -92,3 +92,6 @@ By leveraging latitude and longitude coordinates in the dataset, I was able to p
 Using Folium to Create the Interactive Map
 
 Folium, a Python wrapper for Leaflet.js, was utilized to plot DBSCAN clustering results on an interactive map. Each data point was geolocated using latitude and longitude, with cluster membership and outliers color-coded. This integration allowed for dynamic visual inspection of density-based clusters, which helped highlight high-risk zones for vehicle accidents based on spatial patterns.
+
+Resources
+Dataset: https://catalog.data.gov/dataset/crash-reporting-drivers-data
