@@ -18,7 +18,8 @@ Ultimately, the project seeks to enhance public safety, reduce vehicle repair co
 
 
 ## **Technology**
-In this project i used **Python, Pandas, Matplotlib, Seaborn, Scikit-Learn, and Folium**. I used these as my tech stack with the experience and versitility the project is needed.
+In this project i used **Python, Pandas, Matplotlib, Seaborn, Scikit-Learn, and Folium**. I used these as my tech stack with the experience and versitility the project is needed. In development, we are strengthing the ELT pipeline and creating cloud storage to upload and pull data from our API Vehicle Dataset.
+We are using Azure's Economy to store, control, and monitor our ELT pipeline. 
 
 ## **Methodology**
 
