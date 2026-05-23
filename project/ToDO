@@ -1,0 +1,26 @@
+Stack:
+  - Storage      : Azure Data Lake Storage Gen2 (ADLS)
+  - Ingestion    : Azure Data Factory (ADF) — parameterized pipelines
+  - Warehouse    : Azure Synapse Analytics (serverless SQL pool)
+  - Transforms   : dbt Core (local)
+  - Quality      : dbt tests + ADF validation activity
+  - Orchestration: ADF triggers (schedule + tumbling window)
+  - Secrets      : Azure Key Vault
+  - Monitoring   : Azure Monitor + Log Analytic
+  
+  
+  [ ] Complete Checks for api, and Cloud Connection.
+  [ ] Set up Azure subscription + resource group
+  [ ] Create ADLS Gen2 + bronze/silver/gold containers
+  [ ] Create Synapse workspace + serverless SQL pool
+  [ ] Create Key Vault + store secrets
+  [ ] Build parameterized ADF ingestion pipeline
+  [ ] Build ADF quality gate pipeline
+  [ ] Set up ADF tumbling window trigger
+  [ ] Write upload script (azure-storage-blob SDK)
+  [ ] Set up dbt Core project connected to Synapse
+  [ ] Write dbt models: staging → intermediate → marts
+  [ ] Add dbt tests + documentation
+  [ ] Build gold analysis layer
+  [ ] Set up Azure Monitor alerts
+  [ ] Write README with pipeline DAG diagram
