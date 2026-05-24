@@ -5,4 +5,5 @@ scikit-learn
 folium
 prefect
 azure-storage-blob
+azure-identity
 sodapy
