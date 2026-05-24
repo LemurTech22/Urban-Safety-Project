@@ -7,3 +7,4 @@ prefect
 azure-storage-blob
 azure-identity
 sodapy
+pandera[pandas]

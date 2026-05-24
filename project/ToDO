@@ -15,8 +15,8 @@ Stack:
   [ ] Create Synapse workspace + serverless SQL pool
   [X] Write upload script (AzureBlobHandler OOP class)
   [X] Extract Urban Crash data → upload to bronze container
-  [ ] Inspect raw fields (5-row sample) → build Pandera schema
-  [ ] Build silver transform (clean categoricals, drop junk columns)
+  [X] Inspect raw fields (5-row sample) → build Pandera schema
+  [X] Build silver transform (clean categoricals, drop junk columns)
   [ ] Build ADF parameterized ingestion pipeline
   [ ] Build ADF quality gate pipeline
   [ ] Set up ADF tumbling window trigger
@@ -39,9 +39,7 @@ COMPLETE
    → methods: upload_dataframe, list_files
    → import this into all Azure pipeline scripts
 
-=======================================================
-INCOMPLETE
-=======================================================
+
 3. Schema validation with Pandera
    → inspect the raw API fields first (run a 5-row sample)
    → build Pandera schema for the crash dataset
@@ -52,7 +50,9 @@ INCOMPLETE
    → standardize column names
    → drop irrelevant columns (vehicle ID, report number, metadata)
    → validate schema at bronze → silver transition
-
+=======================================================
+INCOMPLETE
+=======================================================
 5. Build gold layer
    → crash hotspots by location bucket
    → severity distribution over time
