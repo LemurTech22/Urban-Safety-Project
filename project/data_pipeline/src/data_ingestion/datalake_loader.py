@@ -18,6 +18,7 @@ class AzureBlobHandler:
         self.bronze          = os.getenv("AZURE_CONTAINER_BRONZE")
         self.credential      = None
         self.blob_client     = None
+        self.df              = df
 
         missing = [
             k for k, v in {
@@ -89,43 +90,44 @@ class AzureBlobHandler:
         container_client = self.blob_client.get_container_client(container)
         blobs = container_client.list_blobs(name_starts_with=prefix)
         return [b["name"] for b in blobs]
+    def data_verification(self,blob_path: str):
+        print("\n=== VERIFYING BRONZE ===")
+        files = self.list_files(self.bronze, prefix="urban_crash/")
+        print(f"Files in bronze/urban_crash/:")
+        for f in files:
+            print(f"  {f}")
 
+        if self.file_exists(self.bronze, blob_path):
+            print(f"\n✓ Verified — {blob_path} exists in bronze")
+        else:
+            print(f"\n✗ Verification failed — file not found")
+
+#Clean up main here and run code off of run.py in the data pipeline folder.
+#needs a dataframe from ingestion step 1. extractor.py
+    def data_uploader(self):
+        
+        # step 2 — upload to bronze
+        #Upload layer function
+        print("=== UPLOADING TO BRONZE ===")
+        blob_path = build_bronze_path("urban_crash")
+
+        if self.file_exists(self.bronze, blob_path):
+            print(f"Already exists at {blob_path} — skipping")
+        else:
+            self.upload_df(self.df, container=self.bronze, blob_path=blob_path)
+
+        self.data_verification(blob_path)
+            # step 3 — verify
+            #Split into verification function
+        
 
 def build_bronze_path(dataset_name: str) -> str:
     now = datetime.utcnow()
     return (
         f"{dataset_name}/"
-        f"year={now.year}/"
-        f"month={now.month:02d}/"
-        f"day={now.day:02d}/"
+        f"year_{now.year}/"
+        f"month_{now.month:02d}/"
+        f"day_{now.day:02d}/"
         f"raw.csv"
     )
-
-#Clean up main here and run code off of run.py in the data pipeline folder.
-
-def data_uploader(self):
-
-    # step 2 — upload to bronze
-    #Upload layer function
-    print("=== UPLOADING TO BRONZE ===")
-    blob_path = build_bronze_path("urban_crash")
-
-    with AzureBlobHandler() as handler:
-
-        if handler.file_exists(self.bronze, blob_path):
-            print(f"Already exists at {blob_path} — skipping")
-        else:
-            handler.upload_df(self.df, container=self.bronze, blob_path=blob_path)
-
-        # step 3 — verify
-        #Split into verification function
-        print("\n=== VERIFYING BRONZE ===")
-        files = handler.list_files(self.bronze, prefix="urban_crash/")
-        print(f"Files in bronze/urban_crash/:")
-        for f in files:
-            print(f"  {f}")
-
-        if handler.file_exists(self.bronze, blob_path):
-            print(f"\n✓ Verified — {blob_path} exists in bronze")
-        else:
-            print(f"\n✗ Verification failed — file not found")
+    
