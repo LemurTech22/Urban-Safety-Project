@@ -9,9 +9,9 @@ Stack:
   - Monitoring   : Azure Monitor + Log Analytic
   
   
-  [ ] Complete Checks for api, and Cloud Connection.
-  [ ] Set up Azure subscription + resource group
-  [ ] Create ADLS Gen2 + bronze/silver/gold containers
+  [x] Complete Checks for api, and Cloud Connection.
+  [x] Set up Azure subscription + resource group
+  [x] Create ADLS Gen2 + bronze/silver/gold containers
   [ ] Create Synapse workspace + serverless SQL pool
   [ ] Create Key Vault + store secrets
   [ ] Build parameterized ADF ingestion pipeline
@@ -24,3 +24,32 @@ Stack:
   [ ] Build gold analysis layer
   [ ] Set up Azure Monitor alerts
   [ ] Write README with pipeline DAG diagram
+
+  1. Extract the Urban Crash data from the Socrata API
+   → use your working extractor script (10-20k records)
+   → upload raw data to bronze container
+
+2. Build AzureBlobHandler class (OOP pattern)
+   → mirrors your S3Handler concept
+   → methods: upload_dataframe, download_dataframe, list_files
+   → import this into all Azure pipeline scripts
+
+3. Schema validation with Pandera
+   → inspect the raw API fields first (run a 5-row sample)
+   → build Pandera schema for the crash dataset
+   → run PII audit (lat/lon, location fields need checking)
+
+4. Build silver layer transform
+   → clean categoricals (Snow vs SNOW issue from your project notes)
+   → standardize column names
+   → drop irrelevant columns (vehicle ID, report number, metadata)
+   → validate schema at bronze → silver transition
+
+5. Build gold layer
+   → crash hotspots by location bucket
+   → severity distribution over time
+   → weather + surface condition correlations
+   → DUI / substance abuse frequency by area
+
+6. Wire it all into a Prefect flow
+   → extract → validate → transform → upload bronze → silver → gold
