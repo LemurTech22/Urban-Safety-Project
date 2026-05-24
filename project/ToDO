@@ -13,12 +13,14 @@ Stack:
   [x] Set up Azure subscription + resource group
   [x] Create ADLS Gen2 + bronze/silver/gold containers
   [ ] Create Synapse workspace + serverless SQL pool
-  [ ] Create Key Vault + store secrets
-  [ ] Build parameterized ADF ingestion pipeline
+  [ ] Write upload script (AzureBlobHandler OOP class)
+  [ ] Extract Urban Crash data → upload to bronze container
+  [ ] Inspect raw fields (5-row sample) → build Pandera schema
+  [ ] Build silver transform (clean categoricals, drop junk columns)
+  [ ] Build ADF parameterized ingestion pipeline
   [ ] Build ADF quality gate pipeline
   [ ] Set up ADF tumbling window trigger
-  [ ] Write upload script (azure-storage-blob SDK)
-  [ ] Set up dbt Core project connected to Synapse
+  [ ] Set up dbt Core connected to Synapse
   [ ] Write dbt models: staging → intermediate → marts
   [ ] Add dbt tests + documentation
   [ ] Build gold analysis layer
