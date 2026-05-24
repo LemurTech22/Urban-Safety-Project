@@ -1,0 +1,131 @@
+import os
+import io
+import pandas as pd
+from datetime import datetime
+from dotenv import load_dotenv
+from azure.identity import ClientSecretCredential
+from azure.storage.blob import BlobServiceClient
+
+
+class AzureBlobHandler:
+
+    def __init__(self, df: pd.DataFrame):
+        load_dotenv()
+        self.storage_account = os.getenv("AZURE_STORAGE_ACCOUNT")
+        self.tenant_id       = os.getenv("AZURE_TENANT_ID")
+        self.client_id       = os.getenv("AZURE_CLIENT_ID")
+        self.client_secret   = os.getenv("AZURE_CLIENT_SECRET")
+        self.bronze          = os.getenv("AZURE_CONTAINER_BRONZE")
+        self.credential      = None
+        self.blob_client     = None
+
+        missing = [
+            k for k, v in {
+                "AZURE_STORAGE_ACCOUNT": self.storage_account,
+                "AZURE_TENANT_ID":       self.tenant_id,
+                "AZURE_CLIENT_ID":       self.client_id,
+                "AZURE_CLIENT_SECRET":   self.client_secret,
+            }.items() if not v
+        ]
+        if missing:
+            raise EnvironmentError(
+                f"Missing required environment variables: {missing}\n"
+                f"Check your .env file."
+            )
+
+    def __enter__(self):
+        self.credential = ClientSecretCredential(
+            tenant_id=self.tenant_id,
+            client_id=self.client_id,
+            client_secret=self.client_secret
+        )
+        self.blob_client = BlobServiceClient(
+            f"https://{self.storage_account}.blob.core.windows.net/",
+            credential=self.credential
+        )
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.blob_client:              
+            self.blob_client.close()
+        if self.credential:
+            self.credential.close()
+
+    def upload_df(
+        self,
+        df: pd.DataFrame,
+        container: str,
+        blob_path: str,
+        file_format: str = "csv"
+    ):
+        buffer = io.BytesIO()
+        if file_format == "parquet":
+            df.to_parquet(buffer, index=False, engine="pyarrow")
+        else:
+            df.to_csv(buffer, index=False, encoding="utf-8")
+
+        buffer.seek(0)
+
+        container_client = self.blob_client.get_container_client(container)
+
+        container_client.upload_blob(
+            name=blob_path,
+            data=buffer,
+            overwrite=True
+        )
+
+        size_kb = buffer.tell() / 1024
+        print(f"  ✓ Uploaded {len(df)} rows ({size_kb:.1f} KB) "
+              f"→ {container}/{blob_path}")
+
+    def file_exists(self, container: str, blob_path: str) -> bool:
+
+        container_client = self.blob_client.get_container_client(container)
+        blob_client = container_client.get_blob_client(blob_path)
+        return blob_client.exists()
+
+    def list_files(self, container: str, prefix: str = "") -> list[str]:
+
+        container_client = self.blob_client.get_container_client(container)
+        blobs = container_client.list_blobs(name_starts_with=prefix)
+        return [b["name"] for b in blobs]
+
+
+def build_bronze_path(dataset_name: str) -> str:
+    now = datetime.utcnow()
+    return (
+        f"{dataset_name}/"
+        f"year={now.year}/"
+        f"month={now.month:02d}/"
+        f"day={now.day:02d}/"
+        f"raw.csv"
+    )
+
+#Clean up main here and run code off of run.py in the data pipeline folder.
+
+def data_uploader(self):
+
+    # step 2 — upload to bronze
+    #Upload layer function
+    print("=== UPLOADING TO BRONZE ===")
+    blob_path = build_bronze_path("urban_crash")
+
+    with AzureBlobHandler() as handler:
+
+        if handler.file_exists(self.bronze, blob_path):
+            print(f"Already exists at {blob_path} — skipping")
+        else:
+            handler.upload_df(self.df, container=self.bronze, blob_path=blob_path)
+
+        # step 3 — verify
+        #Split into verification function
+        print("\n=== VERIFYING BRONZE ===")
+        files = handler.list_files(self.bronze, prefix="urban_crash/")
+        print(f"Files in bronze/urban_crash/:")
+        for f in files:
+            print(f"  {f}")
+
+        if handler.file_exists(self.bronze, blob_path):
+            print(f"\n✓ Verified — {blob_path} exists in bronze")
+        else:
+            print(f"\n✗ Verification failed — file not found")

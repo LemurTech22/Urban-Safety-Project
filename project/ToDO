@@ -13,8 +13,8 @@ Stack:
   [x] Set up Azure subscription + resource group
   [x] Create ADLS Gen2 + bronze/silver/gold containers
   [ ] Create Synapse workspace + serverless SQL pool
-  [ ] Write upload script (AzureBlobHandler OOP class)
-  [ ] Extract Urban Crash data → upload to bronze container
+  [X] Write upload script (AzureBlobHandler OOP class)
+  [X] Extract Urban Crash data → upload to bronze container
   [ ] Inspect raw fields (5-row sample) → build Pandera schema
   [ ] Build silver transform (clean categoricals, drop junk columns)
   [ ] Build ADF parameterized ingestion pipeline
@@ -27,15 +27,21 @@ Stack:
   [ ] Set up Azure Monitor alerts
   [ ] Write README with pipeline DAG diagram
 
+=======================================================
+COMPLETE
+=======================================================
   1. Extract the Urban Crash data from the Socrata API
    → use your working extractor script (10-20k records)
    → upload raw data to bronze container
 
 2. Build AzureBlobHandler class (OOP pattern)
    → mirrors your S3Handler concept
-   → methods: upload_dataframe, download_dataframe, list_files
+   → methods: upload_dataframe, list_files
    → import this into all Azure pipeline scripts
 
+=======================================================
+INCOMPLETE
+=======================================================
 3. Schema validation with Pandera
    → inspect the raw API fields first (run a 5-row sample)
    → build Pandera schema for the crash dataset

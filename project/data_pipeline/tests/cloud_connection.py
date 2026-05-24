@@ -13,8 +13,6 @@ if __name__ == "__main__":
     container_bronze=os.getenv("AZURE_CONTAINER_BRONZE")
     container_silver=os.getenv("AZURE_CONTAINER_SILVER")
     container_gold=os.getenv("AZURE_CONTAINER_GOLD")
-
-    
     print("Testing Azure Connections....")
     container_list=[
         os.getenv("AZURE_CONTAINER_BRONZE"),
