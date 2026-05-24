@@ -6,9 +6,10 @@ from dotenv import load_dotenv
 from azure.identity import ClientSecretCredential
 from azure.storage.blob import BlobServiceClient
 
+#idea maybe create a template so that other sources can use it like silver and gold layer.
 
 class AzureBlobHandler:
-
+    #initialize variables and .envs
     def __init__(self, df: pd.DataFrame):
         load_dotenv()
         self.storage_account = os.getenv("AZURE_STORAGE_ACCOUNT")
@@ -28,12 +29,15 @@ class AzureBlobHandler:
                 "AZURE_CLIENT_SECRET":   self.client_secret,
             }.items() if not v
         ]
+        
         if missing:
             raise EnvironmentError(
                 f"Missing required environment variables: {missing}\n"
                 f"Check your .env file."
             )
-
+    #runs first using the with statement in run.py
+    #intializes variables for us to use. ensures setup and tear down are consistent
+    #similar to try statements
     def __enter__(self):
         self.credential = ClientSecretCredential(
             tenant_id=self.tenant_id,
@@ -45,13 +49,15 @@ class AzureBlobHandler:
             credential=self.credential
         )
         return self
-
+    
+    #releases resources once pipeline is finished
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.blob_client:              
             self.blob_client.close()
         if self.credential:
             self.credential.close()
 
+    #grabs the dataframe and uploads to the cloud aka azure
     def upload_df(
         self,
         df: pd.DataFrame,
@@ -59,6 +65,7 @@ class AzureBlobHandler:
         blob_path: str,
         file_format: str = "csv"
     ):
+        
         buffer = io.BytesIO()
         if file_format == "parquet":
             df.to_parquet(buffer, index=False, engine="pyarrow")
@@ -67,8 +74,10 @@ class AzureBlobHandler:
 
         buffer.seek(0)
 
+        #initializes the azure client
         container_client = self.blob_client.get_container_client(container)
 
+        #uploads the df
         container_client.upload_blob(
             name=blob_path,
             data=buffer,
@@ -90,7 +99,9 @@ class AzureBlobHandler:
         container_client = self.blob_client.get_container_client(container)
         blobs = container_client.list_blobs(name_starts_with=prefix)
         return [b["name"] for b in blobs]
+    
     def data_verification(self,blob_path: str):
+
         print("\n=== VERIFYING BRONZE ===")
         files = self.list_files(self.bronze, prefix="urban_crash/")
         print(f"Files in bronze/urban_crash/:")
@@ -101,9 +112,8 @@ class AzureBlobHandler:
             print(f"\n✓ Verified — {blob_path} exists in bronze")
         else:
             print(f"\n✗ Verification failed — file not found")
-
-#Clean up main here and run code off of run.py in the data pipeline folder.
-#needs a dataframe from ingestion step 1. extractor.py
+    
+    #this function does all the work
     def data_uploader(self):
         
         # step 2 — upload to bronze
@@ -120,7 +130,6 @@ class AzureBlobHandler:
             # step 3 — verify
             #Split into verification function
         
-
 def build_bronze_path(dataset_name: str) -> str:
     now = datetime.utcnow()
     return (

@@ -16,3 +16,7 @@ if __name__ == "__main__":
     print("=== Loading into Datalake ===")
     with AzureBlobHandler(df) as blob_handler:
         blob_handler.data_uploader()
+
+    # step 3 - reviewing tables
+
+    
