@@ -17,15 +17,17 @@ Stack:
   [X] Extract Urban Crash data → upload to bronze container
   [X] Inspect raw fields (5-row sample) → build Pandera schema
   [X] Build silver transform (clean categoricals, drop junk columns)
-  [ ] Build ADF parameterized ingestion pipeline
-  [ ] Build ADF quality gate pipeline
-  [ ] Set up ADF tumbling window trigger
+  [X] Build ADF parameterized ingestion pipeline
+  [X] Build ADF quality gate pipeline
+  [X] Set up ADF tumbling window trigger
   [ ] Set up dbt Core connected to Synapse
   [ ] Write dbt models: staging → intermediate → marts
   [ ] Add dbt tests + documentation
-  [ ] Build gold analysis layer
+  [X] Build gold analysis layer
+  [] Connect PowerBI to Gold Layer
   [ ] Set up Azure Monitor alerts
   [ ] Write README with pipeline DAG diagram
+  [ ] Fix Access Block in Folium Maps.
 
 =======================================================
 COMPLETE

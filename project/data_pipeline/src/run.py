@@ -5,6 +5,7 @@ from data_ingestion.extractor import DataExtractor
 from data_ingestion.datalake_loader import AzureBlobHandler
 from data_transformation.schema_validation import schema
 from data_transformation.transformation import Transformation
+from data_visualization.Visualization import Visualization
 
 
 load_dotenv()
@@ -24,7 +25,6 @@ if __name__ == "__main__":
         blob_handler.data_uploader()
 
     # step 3 - reviewing tables
-
     print("[3/5] Validating Schema \n Please Wait...")
     try:
         schema.validate(df, lazy=True)
@@ -36,7 +36,6 @@ if __name__ == "__main__":
     print("[4/5] Transforming data \n Please Wait ...")
 
     transform_df = Transformation(df)
-
     silver_df = transform_df.transform_to_silver()
     
     container_silver = os.getenv("AZURE_CONTAINER_SILVER", "silver")
@@ -47,13 +46,22 @@ if __name__ == "__main__":
         f"day={__import__('datetime').datetime.utcnow().day:02d}/"
         f"clean.csv"
     )
-
+    
     with AzureBlobHandler(silver_df) as handler:
         handler.upload_df(
             silver_df,
             container=container_silver,
             blob_path=silver_path
         )
-    print(f"      ✓ Silver uploaded → {silver_path}")
+    value = input("Would you like to view plots & Interactive Map?")
 
-    print("\n[5/5] Gold layer — coming next")
+    if value.lower() == 'y':
+        print(f"Data Transformed Commencing Visualizations")
+        print(silver_df.columns.tolist())
+        print("\n[5/5] Visualizations Beginning \n Please Wait ...")
+
+        with Visualization(silver_df) as Visualization:
+            Visualization.generate_visuals()
+            
+    else: 
+         print("Ending Pipeline \nThank you for using the pipeline.")
