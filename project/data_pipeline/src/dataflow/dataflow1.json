@@ -1,0 +1,64 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SourceDataset_2sz",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          report_number as string,",
+				"          local_case_number as string,",
+				"          agency_name as string,",
+				"          acrs_report_type as string,",
+				"          crash_date_time as string,",
+				"          route_type as string,",
+				"          road_name as string,",
+				"          cross_street_name as string,",
+				"          collision_type as string,",
+				"          weather as string,",
+				"          surface_condition as string,",
+				"          light as string,",
+				"          traffic_control as string,",
+				"          driver_substance_abuse as string,",
+				"          person_id as string,",
+				"          driver_at_fault as string,",
+				"          injury_severity as string,",
+				"          circumstance as string,",
+				"          driver_distracted_by as string,",
+				"          drivers_license_state as string,",
+				"          vehicle_id as string,",
+				"          vehicle_damage_extent as string,",
+				"          vehicle_first_impact_location as string,",
+				"          vehicle_body_type as string,",
+				"          vehicle_movement as string,",
+				"          vehicle_going_dir as string,",
+				"          speed_limit as string,",
+				"          driverless_vehicle as string,",
+				"          parked_vehicle as string,",
+				"          vehicle_year as string,",
+				"          vehicle_make as string,",
+				"          vehicle_model as string,",
+				"          latitude as string,",
+				"          longitude as string,",
+				"          geolocation as string,",
+				"          related_non_motorist as string,",
+				"          non_motorist_substance_abuse as string,",
+				"          off_road_description as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1"
+			]
+		}
+	}
+}
