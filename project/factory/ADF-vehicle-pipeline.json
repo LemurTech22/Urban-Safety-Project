@@ -1,0 +1,15 @@
+{
+	"name": "ADF-vehicle-pipeline",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "23e91fc4-9607-4900-86a5-94e3a13d339d",
+		"tenantId": "170bbabd-a2f0-4c90-ad4b-0e8f0f0c4259"
+	}
+}
