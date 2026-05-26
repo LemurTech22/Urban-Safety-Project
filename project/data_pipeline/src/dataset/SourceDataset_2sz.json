@@ -1,0 +1,178 @@
+{
+	"name": "SourceDataset_2sz",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "raw.csv",
+				"folderPath": "urban_crash/year_2026/month_05/day_26",
+				"fileSystem": "datalake"
+			},
+			"columnDelimiter": ",",
+			"rowDelimiter": "\n",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "report_number",
+				"type": "String"
+			},
+			{
+				"name": "local_case_number",
+				"type": "String"
+			},
+			{
+				"name": "agency_name",
+				"type": "String"
+			},
+			{
+				"name": "acrs_report_type",
+				"type": "String"
+			},
+			{
+				"name": "crash_date_time",
+				"type": "String"
+			},
+			{
+				"name": "route_type",
+				"type": "String"
+			},
+			{
+				"name": "road_name",
+				"type": "String"
+			},
+			{
+				"name": "cross_street_name",
+				"type": "String"
+			},
+			{
+				"name": "collision_type",
+				"type": "String"
+			},
+			{
+				"name": "weather",
+				"type": "String"
+			},
+			{
+				"name": "surface_condition",
+				"type": "String"
+			},
+			{
+				"name": "light",
+				"type": "String"
+			},
+			{
+				"name": "traffic_control",
+				"type": "String"
+			},
+			{
+				"name": "driver_substance_abuse",
+				"type": "String"
+			},
+			{
+				"name": "person_id",
+				"type": "String"
+			},
+			{
+				"name": "driver_at_fault",
+				"type": "String"
+			},
+			{
+				"name": "injury_severity",
+				"type": "String"
+			},
+			{
+				"name": "circumstance",
+				"type": "String"
+			},
+			{
+				"name": "driver_distracted_by",
+				"type": "String"
+			},
+			{
+				"name": "drivers_license_state",
+				"type": "String"
+			},
+			{
+				"name": "vehicle_id",
+				"type": "String"
+			},
+			{
+				"name": "vehicle_damage_extent",
+				"type": "String"
+			},
+			{
+				"name": "vehicle_first_impact_location",
+				"type": "String"
+			},
+			{
+				"name": "vehicle_body_type",
+				"type": "String"
+			},
+			{
+				"name": "vehicle_movement",
+				"type": "String"
+			},
+			{
+				"name": "vehicle_going_dir",
+				"type": "String"
+			},
+			{
+				"name": "speed_limit",
+				"type": "String"
+			},
+			{
+				"name": "driverless_vehicle",
+				"type": "String"
+			},
+			{
+				"name": "parked_vehicle",
+				"type": "String"
+			},
+			{
+				"name": "vehicle_year",
+				"type": "String"
+			},
+			{
+				"name": "vehicle_make",
+				"type": "String"
+			},
+			{
+				"name": "vehicle_model",
+				"type": "String"
+			},
+			{
+				"name": "latitude",
+				"type": "String"
+			},
+			{
+				"name": "longitude",
+				"type": "String"
+			},
+			{
+				"name": "geolocation",
+				"type": "String"
+			},
+			{
+				"name": "related_non_motorist",
+				"type": "String"
+			},
+			{
+				"name": "non_motorist_substance_abuse",
+				"type": "String"
+			},
+			{
+				"name": "off_road_description",
+				"type": "String"
+			}
+		]
+	}
+}
