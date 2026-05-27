@@ -49,7 +49,11 @@ class Visualization:
         plt.show()
 
     def cluster_analysis(self):
-        self.cluster_data = self.df[['latitude', 'longitude', 'speed_limit']].dropna()
+        self.cluster_data = self.df[['avg_latitude', 'avg_longitude', 'speed_limit']].dropna().copy()
+        self.cluster_data = self.cluster_data.rename(columns={
+            'avg_latitude': 'latitude',
+            'avg_longitude': 'longitude'
+    })
         scaler = StandardScaler()
         scaled_clustered_data = scaler.fit_transform(self.cluster_data)
 

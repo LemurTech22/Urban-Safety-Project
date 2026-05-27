@@ -1,5 +1,6 @@
 #this runs the entire pipeline in one swoop
 import os
+import duckdb
 from dotenv import load_dotenv
 from data_ingestion.extractor import DataExtractor
 from data_ingestion.datalake_loader import AzureBlobHandler
@@ -53,14 +54,38 @@ if __name__ == "__main__":
             container=container_silver,
             blob_path=silver_path
         )
+
+    print("[5/5] Uploading Transformed data into Azure \nPlease Wait ...")
+    
+    conn = duckdb.connect('data.duckdb')
+    gold_df = conn.execute("SELECT * FROM mart_crash_hotspot").df()
+    conn.close()
+    
+    container_gold = os.getenv("AZURE_CONTAINER_GOLD", "gold")
+    gold_path = (
+        f"urban_crash/"
+        f"year={__import__('datetime').datetime.utcnow().year}/"
+        f"month={__import__('datetime').datetime.utcnow().month:02d}/"
+        f"day={__import__('datetime').datetime.utcnow().day:02d}/"
+        f"clean.csv"
+    )
+    with AzureBlobHandler(gold_df) as handler:
+        handler.upload_df(
+            gold_df,
+            container=container_gold,
+            blob_path=gold_path
+        )
+
+    print("[5/5] Upload Complete")
+
     value = input("Would you like to view plots & Interactive Map?")
 
     if value.lower() == 'y':
         print(f"Data Transformed Commencing Visualizations")
-        print(silver_df.columns.tolist())
+        print(gold_df.columns.tolist())
         print("\n[5/5] Visualizations Beginning \n Please Wait ...")
 
-        with Visualization(silver_df) as Visualization:
+        with Visualization(gold_df) as Visualization:
             Visualization.generate_visuals()
             
     else: 

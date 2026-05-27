@@ -102,7 +102,7 @@ class AzureBlobHandler:
     
     def data_verification(self,blob_path: str):
 
-        print("\n=== VERIFYING BRONZE ===")
+        print("\nVerifying data please wait...")
         files = self.list_files(self.bronze, prefix="urban_crash/")
         print(f"Files in bronze/urban_crash/:")
         for f in files:
@@ -118,8 +118,7 @@ class AzureBlobHandler:
         
         # step 2 — upload to bronze
         #Upload layer function
-        print("=== UPLOADING TO BRONZE ===")
-        blob_path = build_bronze_path("urban_crash")
+        blob_path = build_path("urban_crash")
 
         if self.file_exists(self.bronze, blob_path):
             print(f"Already exists at {blob_path} — skipping")
@@ -130,7 +129,7 @@ class AzureBlobHandler:
             # step 3 — verify
             #Split into verification function
         
-def build_bronze_path(dataset_name: str) -> str:
+def build_path(dataset_name: str) -> str:
     now = datetime.utcnow()
     return (
         f"{dataset_name}/"

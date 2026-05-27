@@ -3,6 +3,7 @@
 Goal is to cluster all values based on location and find hotspots where accidents occur.
 """
 import pandas as pd
+import os
 
 class Transformation:
     def __init__(self,df: pd.DataFrame):  
@@ -154,5 +155,8 @@ class Transformation:
             print(f"  ✓ Dropped {dropped} rows with null coordinates")
 
         print(f"Silver transform complete — {len(self.df)} rows, {len(self.df.columns)} cols")
+            # save locally for dbt
+        os.makedirs("data/cleaned_data/i L", exist_ok=True)
+        self.df.to_csv("data/cleaned_data/clean.csv", index=False)
         return self.df
 

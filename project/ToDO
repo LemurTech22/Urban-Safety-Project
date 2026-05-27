@@ -12,7 +12,7 @@ Stack:
   [x] Complete Checks for api, and Cloud Connection.
   [x] Set up Azure subscription + resource group
   [x] Create ADLS Gen2 + bronze/silver/gold containers
-  [ ] Create Synapse workspace + serverless SQL pool
+  [X] Create Synapse workspace + serverless SQL pool
   [X] Write upload script (AzureBlobHandler OOP class)
   [X] Extract Urban Crash data → upload to bronze container
   [X] Inspect raw fields (5-row sample) → build Pandera schema
@@ -20,12 +20,12 @@ Stack:
   [X] Build ADF parameterized ingestion pipeline
   [X] Build ADF quality gate pipeline
   [X] Set up ADF tumbling window trigger
-  [ ] Set up dbt Core connected to Synapse
-  [ ] Write dbt models: staging → intermediate → marts
-  [ ] Add dbt tests + documentation
+  [X] Set up dbt Core connected to Synapse
+  [X] Write dbt models: staging → intermediate → marts
+  [X] Add dbt tests + documentation
   [X] Build gold analysis layer
   [] Connect PowerBI to Gold Layer
-  [ ] Set up Azure Monitor alerts
+  [X] Set up Azure Monitor alerts
   [ ] Write README with pipeline DAG diagram
   [ ] Fix Access Block in Folium Maps.
 
