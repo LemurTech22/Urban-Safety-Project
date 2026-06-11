@@ -1,4 +1,4 @@
-🚧 Urban Safety Insights (In Progress)
+Urban Safety Insights
 
 Welcome to the Urban Safety Insights project!
 This project is currently under development, so some components may still be incomplete or in progress.
