@@ -60,6 +60,3 @@ INCOMPLETE
    → severity distribution over time
    → weather + surface condition correlations
    → DUI / substance abuse frequency by area
-
-6. Wire it all into a Prefect flow
-   → extract → validate → transform → upload bronze → silver → gold

@@ -71,7 +71,7 @@ class Visualization:
         # Find the center of the map (mean of all lat/lon)
         center_lat = self.cluster_data['latitude'].mean()
         center_lon = self.cluster_data['longitude'].mean()
-        accident_map = folium.Map(location=[center_lat, center_lon], zoom_start=12)
+        accident_map = folium.Map(location=[center_lat, center_lon], zoom_start=12, tiles='CartoDB positron')
         marker_cluster = MarkerCluster().add_to(accident_map)
 
         for idx, row in self.cluster_data.iterrows():

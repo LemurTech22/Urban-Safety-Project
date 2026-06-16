@@ -1,5 +1,7 @@
-#this runs the entire pipeline in one swoop
+"""Run the urban safety pipeline end to end."""
 import os
+from pathlib import Path
+
 import duckdb
 from dotenv import load_dotenv
 from data_ingestion.extractor import DataExtractor
@@ -7,6 +9,10 @@ from data_ingestion.datalake_loader import AzureBlobHandler
 from data_transformation.schema_validation import schema
 from data_transformation.transformation import Transformation
 from data_visualization.Visualization import Visualization
+
+
+BASE_DIR = Path(__file__).resolve().parents[2]
+DUCKDB_PATH = BASE_DIR / "data.duckdb"
 
 
 load_dotenv()
@@ -57,7 +63,7 @@ if __name__ == "__main__":
 
     print("[5/5] Uploading Transformed data into Azure \nPlease Wait ...")
     
-    conn = duckdb.connect('data.duckdb')
+    conn = duckdb.connect(str(DUCKDB_PATH))
     gold_df = conn.execute("SELECT * FROM mart_crash_hotspot").df()
     conn.close()
     
