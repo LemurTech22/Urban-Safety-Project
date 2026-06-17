@@ -24,14 +24,12 @@ Stack:
   [X] Write dbt models: staging → intermediate → marts
   [X] Add dbt tests + documentation
   [X] Build gold analysis layer
-  [] Connect PowerBI to Gold Layer
+  [X] Connect PowerBI to Gold Layer
   [X] Set up Azure Monitor alerts
-  [ ] Write README with pipeline DAG diagram
-  [ ] Fix Access Block in Folium Maps.
+  [X] Write README with pipeline DAG diagram
+  [X] Fix Access Block in Folium Maps.
 
-=======================================================
-COMPLETE
-=======================================================
+
   1. Extract the Urban Crash data from the Socrata API
    → use your working extractor script (10-20k records)
    → upload raw data to bronze container
@@ -52,11 +50,12 @@ COMPLETE
    → standardize column names
    → drop irrelevant columns (vehicle ID, report number, metadata)
    → validate schema at bronze → silver transition
-=======================================================
-INCOMPLETE
-=======================================================
+
 5. Build gold layer
    → crash hotspots by location bucket
    → severity distribution over time
    → weather + surface condition correlations
    → DUI / substance abuse frequency by area
+=======================================================
+COMPLETE
+=======================================================
