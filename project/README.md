@@ -104,4 +104,17 @@ Dashboard/Findings
 This videos shows the working demo of the pipeline and the interactive map. 
 ![Project Demo](media/project_demo.mp4)
 
-![]
+### Analysis
+![Accidents at Different Speed Limits](media/accidents_each_speed_limit.png)
+
+![Accidents in Different Time of Day](media/accidents_in_time_of_day.png)
+
+![Accidents Direction and Different Speed Limits](media/direction_crash_and_speed_limit.png)
+
+![Accidents for Different Surface Conditions](media/accidents_by_surface_conditions.png)
+
+![Accidents at Different Weather and Time of Days](media/weather_time_crashes.png)
+
+![DUI Crashes for Different Weather Conditions](media/DUI_crashes_weather_conditions.png)
+
+
