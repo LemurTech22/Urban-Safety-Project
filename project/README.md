@@ -102,6 +102,6 @@ Dataset: https://catalog.data.gov/dataset/crash-reporting-drivers-data
 ## Results
 Dashboard/Findings
 This videos shows the working demo of the pipeline and the interactive map. 
-![Project Demo](project/project_demo.mp4)
+![Project Demo](media/project_demo.mp4)
 
 ![]
